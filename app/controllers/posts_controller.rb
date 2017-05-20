@@ -3,6 +3,16 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:edit, :update, :destroy]
 
   def index
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag])
+    else
+      @posts = Post.all
+    end
+  end
+
+  def show
+    @post = Post.includes(comments: [:user]).find(params[:id])
+    @comment = @post.comments.new(user: current_user)
   end
 
   def new
@@ -30,11 +40,6 @@ class PostsController < ApplicationController
     else
       render post_path(@comment.commentable_id)
     end
-  end
-
-  def show
-    @post = Post.includes(comments: [:user]).find(params[:id])
-    @comment = @post.comments.new(user: current_user)
   end
 
   private

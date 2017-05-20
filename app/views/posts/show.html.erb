@@ -1,6 +1,11 @@
 <%= image_tag @post.photo.url(:medium) %>
 <p><%= @post.caption %></p>
-<p><%= @post&.tag_list %></p>
+
+Tags: 
+<% @post&.tag_list.each do |t| %>
+  <%= link_to t, tag_path(t) %>,
+<% end %>
+
 <%= render @post.comments %>
 
 <%= render 'comment_form' %>
