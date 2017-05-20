@@ -10,6 +10,6 @@ unless Rails.env.test?
   end
   
   post = Post.create(captions: "My first post!", user_id: User.first)
-  post.tag_last.add('tags', 'more tags')
+  post.tag_list.add('tags', 'more tags')
   
 end
